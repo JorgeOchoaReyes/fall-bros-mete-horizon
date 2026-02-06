@@ -7,12 +7,15 @@ class GameManager extends hz.Component<typeof GameManager> {
 
   start() {
      this.connectCodeBlockEvent(this.entity, hz.CodeBlockEvents.OnPlayerEnterTrigger, (player: hz.Player) => {
-       this.onPlayerEnter(player);
+
+     });
+     this.connectCodeBlockEvent(this.entity, hz.CodeBlockEvents.OnPlayerExitTrigger, (player: hz.Player) => {
+       this.onPlayerExit(player);
      });
   }
 
-  onPlayerEnter(player: hz.Player) {
-    
+  onPlayerExit(player: hz.Player) {
+    this.world.persistentStorage.setPlayerVariable(player, 'GameManager:player_status', 'dequeued');
   }
 }
 hz.Component.register(GameManager);
